@@ -33,19 +33,32 @@ class Game():
         else:
             return False
     
-    def has_winner(self, game_board):
+    def has_winner(self, visual_board):
         sample_1 = ["X","X","X","X"]
         sample_2 = ["O","O","O","O"]
+        array = np.array(visual_board)
         has_winner = False
-        no_winner = True
-        while no_winner:
-            for col in game_board:
-                if (col[0:4] or col[1:5] or col[2:]) == sample_1:
+        for i in range(1):
+            # check columns for possible winner
+            for i in range(7):
+                if list(array[i, 0:4]) == sample_1 or list(array[i, 1:5]) == sample_1 or list(array[i, 2:]) == sample_1:
                     has_winner = True
-                elif (col[0:4] or col[1:5] or col[2:]) == sample_2:
+                elif list(array[i, 0:4]) == sample_2 or list(array[i, 1:5]) == sample_2 or list(array[i, 2:]) == sample_2:
                     has_winner = True
-            else:
-                no_winner = False
+            # check rows for possible winner
+            flipped_visual_board = []
+            for cell in range(6):
+                row = []
+                for col in visual_board:
+                    row.append(col[cell])
+                flipped_visual_board.append(row)
+            for row in flipped_visual_board:
+                if row[0:4] == sample_1 or row[1:5] == sample_1 or row[2:6] == sample_1 or row[3:] == sample_1:
+                    has_winner = True
+                elif row[0:4] == sample_2 or row[1:5] == sample_2 or row[2:6] == sample_2 or row[3:] == sample_2:
+                    has_winner = True  
+            # check diagonals for possible winner
+            
         return has_winner
         
     def run(self):
@@ -54,7 +67,7 @@ class Game():
         while running:
             self.update_board(game_board, visual_board)
             self.show_board(visual_board)
-            if self.has_winner(game_board):
+            if self.has_winner(visual_board):
                 if turn == 1:
                     print("The winner is player 2!")
                 elif turn == -1:

@@ -1,4 +1,5 @@
 import random, os, time
+import numpy as np
 
 game_board = [[],[],[],[],[],[],[]]
 
