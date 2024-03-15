@@ -14,4 +14,7 @@ for col in game_board:
 print(game_board)
 
 array = np.array(visual_board)
-print(array[:,0:4])
+
+diagonal = array.diagonal(2)
+
+print(diagonal)
