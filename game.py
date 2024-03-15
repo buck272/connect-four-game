@@ -60,19 +60,32 @@ class Game():
             # check diagonals for possible winner
             if list(np.diag(array))[0:4] == sample_1 or list(np.diag(array))[1:5] == sample_1 or list(np.diag(array))[2:] == sample_1 or \
                list(np.diag(array, k=1))[0:4] == sample_1 or list(np.diag(array, k=1))[1:5] == sample_1 or list(np.diag(array, k=2)) == sample_1 or \
-               list(np.diag(array, k=-1))[0:4] == sample_1 or list(np.diag(array, k=-1))[1:5] == sample_1 or list(np.diag(array, k=-2)) == sample_1 or \
+               list(np.diag(array, k=-1))[0:4] == sample_1 or list(np.diag(array, k=-1))[1:5] == sample_1  or list(np.diag(array, k=-1))[2:] == sample_1 or \
+               list(np.diag(array, k=-2))[0:4] == sample_1 or list(np.diag(array, k=-2))[1:5] == sample_1 or list(np.diag(array, k=-3)) == sample_1 or \
                list(np.diag(flipped_array))[0:4] == sample_1 or list(np.diag(flipped_array))[1:5] == sample_1 or list(np.diag(flipped_array))[2:] == sample_1 or \
                list(np.diag(flipped_array, k=1))[0:4] == sample_1 or list(np.diag(flipped_array, k=1))[1:5] == sample_1 or list(np.diag(flipped_array, k=2)) == sample_1 or \
-               list(np.diag(flipped_array, k=-1))[0:4] == sample_1 or list(np.diag(flipped_array, k=-1))[1:5] == sample_1 or list(np.diag(flipped_array, k=-2)) == sample_1:
+               list(np.diag(flipped_array, k=-1))[0:4] == sample_1 or list(np.diag(flipped_array, k=-1))[1:5] == sample_1  or list(np.diag(flipped_array, k=-1))[2:] == sample_1 or \
+               list(np.diag(flipped_array, k=-2))[0:4] == sample_1 or list(np.diag(flipped_array, k=-2))[1:5] == sample_1 or list(np.diag(flipped_array, k=-3)) == sample_1:
                    has_winner = True
             elif list(np.diag(array))[0:4] == sample_2 or list(np.diag(array))[1:5] == sample_2 or list(np.diag(array))[2:] == sample_2 or \
                  list(np.diag(array, k=1))[0:4] == sample_2 or list(np.diag(array, k=1))[1:5] == sample_2 or list(np.diag(array, k=2)) == sample_2 or \
-                 list(np.diag(array, k=-1))[0:4] == sample_2 or list(np.diag(array, k=-1))[1:5] == sample_2 or list(np.diag(array, k=-2)) == sample_2 or \
+                 list(np.diag(array, k=-1))[0:4] == sample_2 or list(np.diag(array, k=-1))[1:5] == sample_2  or list(np.diag(array, k=-1))[2:] == sample_2 or \
+                 list(np.diag(array, k=-2))[0:4] == sample_2 or list(np.diag(array, k=-2))[1:5] == sample_2 or list(np.diag(array, k=-3)) == sample_2 or \
                  list(np.diag(flipped_array))[0:4] == sample_2 or list(np.diag(flipped_array))[1:5] == sample_2 or list(np.diag(flipped_array))[2:] == sample_2 or \
                  list(np.diag(flipped_array, k=1))[0:4] == sample_2 or list(np.diag(flipped_array, k=1))[1:5] == sample_2 or list(np.diag(flipped_array, k=2)) == sample_2 or \
-                 list(np.diag(flipped_array, k=-1))[0:4] == sample_2 or list(np.diag(flipped_array, k=-1))[1:5] == sample_2 or list(np.diag(flipped_array, k=-2)) == sample_2:
+                 list(np.diag(flipped_array, k=-1))[0:4] == sample_2 or list(np.diag(flipped_array, k=-1))[1:5] == sample_2  or list(np.diag(flipped_array, k=-1))[2:] == sample_2 or \
+                 list(np.diag(flipped_array, k=-2))[0:4] == sample_2 or list(np.diag(flipped_array, k=-2))[1:5] == sample_2 or list(np.diag(flipped_array, k=-3)) == sample_2:
                     has_winner = True
         return has_winner
+    def board_is_full(self, board):
+        columns_full = 0
+        for col in board:
+            if len(col) == 6:
+                columns_full += 1
+        if columns_full == 7:
+            return True
+        else:
+            return False
         
     def run(self):
         turn = 1
@@ -87,7 +100,12 @@ class Game():
                     print("The winner is player 1!")
                 running = False
                 break
-                
+            else:
+                if self.board_is_full(game_board):
+                    print("Board is full, but there's no winner!")
+                    running = False
+                    break
+                                
             if turn == 1:
                 pick_column = True
                 while pick_column:

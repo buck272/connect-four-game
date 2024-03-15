@@ -13,8 +13,7 @@ for col in game_board:
         
 print(game_board)
 
+game.update_board(game_board, visual_board)
+game.show_board(visual_board)
 array = np.array(visual_board)
-
-diagonal = array.diagonal(2)
-
-print(diagonal)
+print(np.diag(array, k=-2))
